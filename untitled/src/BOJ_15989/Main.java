@@ -7,42 +7,38 @@ import java.util.StringTokenizer;
 
 public class Main {
 
-    static int[] map;
-    static int M;
-
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
         Integer N = Integer.parseInt(st.nextToken());
 
-        for (int i = 0; i < N; i++) {
+        for (int a = 0; a < N; a++) {
             st = new StringTokenizer(br.readLine());
-            M = Integer.parseInt(st.nextToken());
-            map = new int[M + 1];
+            int M = Integer.parseInt(st.nextToken());
 
-            dp(0, 0);
-            System.out.println(map[M]);
-        }
-    }
+            int[][] map = new int[10001][4];        //[dp의 총길이][더한 정수]
 
-    private static void dp(int num, int added) {
-        if (num > M) {
-            return;
-        } else if (num == M) {
-            map[M]++;
-            return;
+            map[0][1] = map[0][2] = map[0][3] = 0;
+            map[1][1] = 1;
+            map[1][1] = 1;
+            map[2][1] = 1;
+            map[2][2] = 1;
+            map[3][1] = 1;
+            map[3][1] = 1;
+            map[3][2] = 1;
+            map[3][3] = 1;
+
+            for (int i = 4; i <= M; i++) {
+                map[i][1] = map[i-1][1];
+                map[i][2] = map[i-2][2] + map[i-2][1];
+                map[i][3] = map[i-3][2] + map[i-3][1] + map[i - 3][3];
+            }
+
+            System.out.println(map[M][1] + map[M][2] + map[M][3]);
         }
 
-        map[num]++;
-        if (added == 0 || added == 3) {
-            dp(num+1, 1);
-            dp(num+2, 2);
-            dp(num+3, 3);
-        } else if (added == 2) {
-            dp(num+1, 1);
-            dp(num+2, 2);
-        } else if (added == 1) {
-            dp(num + 1, 1);
-        }
+
+
+
     }
 }
