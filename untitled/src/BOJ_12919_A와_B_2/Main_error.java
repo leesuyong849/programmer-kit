@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class Main {
+public class Main_error {
 
     static String S, T;
 
@@ -26,11 +26,18 @@ public class Main {
 
 
         String next1 = str + "A";
-
         int bf = bf(next1);
         if (bf == 1) return 1;
 
-        String next2 = new StringBuilder(str + "B").reverse().toString();
+//        String next2 = new StringBuilder(str + "B").reverse().toString();
+        String tempStr = str + "B";
+        char[] chars = tempStr.toCharArray();
+        for (int i = 0, j = chars.length - 1; i < j; i++, j--) {
+            char temp = chars[i];
+            chars[i] = chars[j];
+            chars[j] = temp;
+        }
+        String next2 = new String(chars);
         bf = bf(next2);
         if (bf == 1) return 1;
 
