@@ -1,11 +1,9 @@
-package BPJ_20437_문자열게임2;
+package BOJ_20437_문자열게임2;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.security.Key;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Main {
@@ -18,7 +16,7 @@ public class Main {
             String string = bf.readLine();
             int N = Integer.parseInt(bf.readLine());
             int L = string.length();
-            List<Integer>[] list = new ArrayList[26];
+            List<Integer>[] list = new ArrayList[26];       //각 문자열 별 위치 파악
             int shortAns = Integer.MAX_VALUE;
             int longAns = Integer.MIN_VALUE;
 
@@ -42,7 +40,7 @@ public class Main {
                 for (int c = 0; c + N - 1 < ints.size(); c++) {
                     int left = c;
                     int right = c + N - 1;
-                    int dif = ints.get(right) - ints.get(left);
+                    int dif = ints.get(right) - ints.get(left) + 1;
 
                     if (dif < shortAns) shortAns = dif;
                     if (dif > longAns) longAns = dif;
@@ -52,11 +50,8 @@ public class Main {
             if (shortAns == Integer.MAX_VALUE) {
                 System.out.println(-1);
             } else {
-                System.out.println(shortAns + 1 + " " + longAns + 1);
-
+                System.out.println(shortAns + " " + longAns);
             }
         }
-
-
     }
 }
