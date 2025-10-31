@@ -9,15 +9,6 @@ import java.util.StringTokenizer;
 
 public class Main {
 
-    class Node {
-        int position, durability;
-
-        public void Node(int p, int durability) {
-            this.position = p;
-            this.durability = durability;
-        }
-    }
-
     static int N, K;
     static int[] map;
 
@@ -31,43 +22,50 @@ public class Main {
         int level = 0;                              //몇 단계인지 저장
 
         map = new int[N * 2 + 1];
+        map[0] = Integer.MAX_VALUE;
         st = new StringTokenizer(bf.readLine());
         for (int i = 1; i <= N * 2; i++) {
             map[i] = Integer.parseInt(st.nextToken());
         }
 
-        ArrayList<Integer> robots = new ArrayList<>();
+        boolean[] robots = new boolean[N + 1];
 
 
         while (true) {
             level++;
 
-            int[] nextMap = new int[N * 2 + 1];
-            nextMap[1] = map[N * 2];
-
+            //1
+            int temp = map[2 * N];
             for (int i = 1; i < 2 * N; i++) {
-                nextMap[i + 1] = map[i];
+                map[i + 1] = map[i];
             }
+            map[1] = temp;
 
-            for (Integer robot : robots) {
-                robot++;
+            if (robots[N - 1]) robots[N - 1] = false;
+            for (int i = N - 1; i >= 1; i--) {
+                robots[i + 1] = robots[i];
             }
 
             //2.
-            for (Integer robot : robots) {
-                if (!robots.contains(robot + 1) && nextMap[robot + 1] >= 1) {
-                    robot++;
+            for (int i = N - 1; i >= 1; i--) {
+                if (robots[i] && !robots[i + 1] && map[i + 1] >= 1) {
+                    robots[i + 1] = true;
+                    robots[i] = false;
                 }
+
+                if (robots[N]) robots[N] = false;
             }
 
             //3.
-            if (!robots.contains(1)) {
-                robots.add(1);
+            if (!robots[1] && map[1] != 0) {
+                robots[1] = true;
+                map[1]--;
             }
 
             //4.
-            long count = Arrays.stream(nextMap).filter(o -> o == 0).count();
-            if (count >= K) break;
+            int zeroCnt = 0;
+            for (int i = 1; i <= 2 * N; i++) if (map[i] == 0) zeroCnt++;
+            if (zeroCnt >= K) break;
         }
 
         System.out.println(level);
