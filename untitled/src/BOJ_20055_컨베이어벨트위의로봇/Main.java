@@ -41,23 +41,25 @@ public class Main {
             }
             map[1] = temp;
 
-            if (robots[N - 1]) robots[N - 1] = false;
-            for (int i = N - 1; i >= 1; i--) {
-                robots[i + 1] = robots[i];
+            for (int i = N; i >= 2; i--) {
+                robots[i] = robots[i - 1];
             }
+//            robots[1] = false;   // 올리는 칸은 비워둔다
+            robots[N] = false;   // 내리는 칸 즉시 비우기
+
 
             //2.
             for (int i = N - 1; i >= 1; i--) {
-                if (robots[i] && !robots[i + 1] && map[i + 1] >= 1) {
+                if (robots[i] && !robots[i + 1] && map[i + 1] > 0) {
                     robots[i + 1] = true;
                     robots[i] = false;
+                    map[i+1]--;
                 }
-
-                if (robots[N]) robots[N] = false;
             }
+            robots[N] = false;
 
             //3.
-            if (!robots[1] && map[1] != 0) {
+            if (!robots[1] && map[1] > 0) {
                 robots[1] = true;
                 map[1]--;
             }

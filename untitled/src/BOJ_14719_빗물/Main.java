@@ -27,6 +27,7 @@ public class Main {
 
         int stand = map[0];
         ArrayDeque<Integer> stack = new ArrayDeque<>();
+        int lastCnt = 0;
 
         for (int i = 1; i < W; i++) {
             int now = map[i];
@@ -36,6 +37,7 @@ public class Main {
                     result += one;
                 }
                 stand = now;
+                lastCnt = i;
             } else {
                 stack.add(now);
             }
@@ -43,7 +45,7 @@ public class Main {
 
         if (!stack.isEmpty()) {
             for (Integer integer : stack) {
-                int i =  Math.abs(map[W - 1] - integer);
+                int i = Math.max(map[W - 1] - integer, 0);
                 result += i;
             }
         }
