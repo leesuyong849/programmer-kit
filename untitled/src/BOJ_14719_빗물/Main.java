@@ -25,31 +25,21 @@ public class Main {
             map[i] = Integer.parseInt(st.nextToken());
         }
 
-        int stand = map[0];
-        ArrayDeque<Integer> stack = new ArrayDeque<>();
-        int lastCnt = 0;
-
-        for (int i = 1; i < W; i++) {
-            int now = map[i];
-            if (now >= stand) {
-                while (!stack.isEmpty()) {
-                    int one = stand - stack.poll();
-                    result += one;
-                }
-                stand = now;
-                lastCnt = i;
+        int left = 0, right =  W - 1;
+        int leftMax = 0, rightMax = 0;
+        int water = 0;
+        while (left < right) {
+            if (map[left] <= map[right]) {
+                leftMax = Math.max(leftMax, map[left]);
+                water += leftMax - map[left];
+                left++;
             } else {
-                stack.add(now);
+                rightMax = Math.max(rightMax, map[right]);
+                water += rightMax - map[right];
+                right--;
             }
         }
 
-        if (!stack.isEmpty()) {
-            for (Integer integer : stack) {
-                int i = Math.max(map[W - 1] - integer, 0);
-                result += i;
-            }
-        }
-
-        System.out.println(result);
+        System.out.println(water);
     }
 }
