@@ -65,7 +65,6 @@ public class Main {
                     winner = team;
                 }
             }
-
         }
         System.out.println(winner);
     }
