@@ -20,7 +20,7 @@ public class Main {
         M = Integer.parseInt(st.nextToken());
         map = new int[101];
 
-        for (int i = 0; i < N; i++) {
+        for (int i = 0; i < N + M; i++) {
             st = new StringTokenizer(br.readLine());
             int s = Integer.parseInt(st.nextToken());
             int e = Integer.parseInt(st.nextToken());
@@ -34,28 +34,27 @@ public class Main {
         int cnt = 0;
         while(!que.isEmpty()) {
             Integer poll = que.poll();
+            if (poll > 100) {
+                continue;
+            }
 
             if (poll == 0) {
                 cnt++;
                 continue;
+            } else if (poll == 100) {
+                break;
             }
 
             for (int i = 1; i < 7; i++) {
                 int dir = poll + i;
+                if (dir > 100) continue;
                 if (map[dir] != 0) {
                     dir = map[dir];
                 }
 
-                if (dir == 100) {
-                    cnt++;
-                    break;
-                } else if (dir > 100) {
-                    continue;
-                } else {
-                    que.add(dir);
-                }
-                que.add(0);
+                que.add(dir);
             }
+            que.add(0);
         }
 
         System.out.println(cnt);
