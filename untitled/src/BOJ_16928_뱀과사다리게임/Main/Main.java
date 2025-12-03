@@ -12,6 +12,7 @@ public class Main {
     static int[] map;
     static int N, M;
     static Queue<Integer> que;
+    static int[] result;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -19,6 +20,7 @@ public class Main {
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
         map = new int[101];
+        result = new int[101];
 
         for (int i = 0; i < N + M; i++) {
             st = new StringTokenizer(br.readLine());
@@ -30,33 +32,29 @@ public class Main {
 
         que = new ArrayDeque<>();
         que.add(1);
+        result = new int[101];
+        result[1] = 0;
 
-        int cnt = 0;
         while(!que.isEmpty()) {
-            Integer poll = que.poll();
-            if (poll > 100) {
-                continue;
-            }
+            Integer cur = que.poll();
 
-            if (poll == 0) {
-                cnt++;
-                continue;
-            } else if (poll == 100) {
-                break;
-            }
+            //목적지 도착
+            if (cur == 100) break;
 
-            for (int i = 1; i < 7; i++) {
-                int dir = poll + i;
-                if (dir > 100) continue;
-                if (map[dir] != 0) {
-                    dir = map[dir];
-                }
+            for (int i = 1; i <= 6; i++) {
+                int next = cur + i;
+                if (next > 100) continue;
 
-                que.add(dir);
+                if (map[next] != 0) next = map[next];
+
+                //이미 방문한 곳
+                if (result[next] != 0) continue;
+
+                result[next] = result[cur] + 1;
+                que.add(next);
             }
-            que.add(0);
         }
 
-        System.out.println(cnt);
+        System.out.println(result[100]);
     }
 }
