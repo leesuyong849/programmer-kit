@@ -40,7 +40,9 @@ public class Main2 {
 
             dist = new int[N + 1];
             Arrays.fill(dist, Integer.MAX_VALUE);
+            dij(1);
 
+            System.out.println(dist[N]);
         }
     }
 
@@ -50,9 +52,22 @@ public class Main2 {
         pq.add(new int[]{a, 0});
         while (!pq.isEmpty()) {
             int[] poll = pq.poll();
+            int cur = poll[0];
+            int curW = poll[1];
 
-            if (poll[1] < dist[a]) {
+            if (poll[1] <= dist[a]) {
                 dist[a] = poll[1];
+
+                List<Node> nodes = graph[cur];
+                for (Node node : nodes) {
+                    int next = node.to;
+                    int w = node.w;
+
+                    if (curW + w < dist[next]) {
+                        dist[next] = curW + w;
+                        pq.add(new int[] {next, curW + w});
+                    }
+                }
             }
         }
 
