@@ -1,95 +1,73 @@
 package BOJ_7682_틱택토;
 
+package BOJ_7682_틱택토;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Main {
-
-    static Character[][] map;
-    static boolean flagO;
+    static char[][] map;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         while (true) {
             String s = br.readLine();
-            map = new Character[3][3];
-
             if (s.equals("end")) break;
 
+            map = new char[3][3];
+            int xCnt = 0, oCnt = 0, dotCnt = 0;
 
-            flagO = false;
-            //각 문자 갯수
-            int countX = 0, countO = 0;
-            //. 이 있는지 확인
-            boolean flagDot = false;
-
-            for (int i = 0; i < s.length(); i++) {
+            for (int i = 0; i < 9; i++) {
                 char c = s.charAt(i);
-                int floor = (int) Math.floor(i / 3);
-                int y = i % 3;
-                map[floor][y] = c;
-
-                if (c == '.') flagDot = true;
-                else if (c == 'X') countX++;
-                else if (c == 'O') countO++;
+                map[i / 3][i % 3] = c;
+                if (c == 'X') xCnt++;
+                else if (c == 'O') oCnt++;
+                else dotCnt++;
             }
 
-            //연속된 것이 몇개 있는지 확인한다.
-            int flag = check();
+            boolean xWin = win('X');
+            boolean oWin = win('O');
 
-            if (Math.abs(countX - countO) > 1 || countX < countO) {
-                System.out.println("invalid");
-                continue;
-            }
+            boolean valid = false;
 
-            if (flag > 1) {
-                if (flag == 2 && checkDoubleCross()) System.out.println("valid");
-                else System.out.println("invalid");
-            }
-            else if (flag == 0) {
-                if (flagDot) System.out.println("invalid");
-                else System.out.println("valid");
-            } else {
-                if (flagO && (countO != countX)){
-                    System.out.println("invalid");
-                } else {
-                    System.out.println("valid");
+            //개수 기본 규칙: X는 O와 같거나 1개 많아야 함
+            if (xCnt == oCnt || xCnt == oCnt + 1) {
+
+                //둘 다 이기는 경우는 불가능
+                if (!(xWin && oWin)) {
+
+                    //X가 이겼으면 X가 1개 더 많아야 함
+                    if (xWin) {
+                        valid = (xCnt == oCnt + 1);
+
+                        //O가 이겼으면 개수가 같아야 함
+                    } else if (oWin) {
+                        valid = (xCnt == oCnt);
+
+                        //아무도 안 이겼으면 판이 꽉 차 있어야 함
+                    } else {
+                        valid = (dotCnt == 0);
+                    }
                 }
             }
+
+            System.out.println(valid ? "valid" : "invalid");
         }
     }
 
-    public static int check() {
-        int count = 0;
+    static boolean win(char p) {
         for (int i = 0; i < 3; i++) {
-            if (map[i][0] == map[i][1] && map[i][1] == map[i][2] && map[i][0] != '.'){
-                count++;
-                if (map[i][0] == 'O') flagO = true;
-            }
-            else if (map[0][i] == map[1][i] && map[1][i] == map[2][i] && map[0][i] != '.') {
-                count++;
-                if (map[i][0] == 'O') flagO = true;
-            }
+            if (map[i][0] == p && map[i][1] == p && map[i][2] == p) return true;
         }
-        if (map[0][0] == map[1][1] && map[1][1] == map[2][2] && map[1][1] != '.') {
-            if (map[0][0] == 'O') flagO = true;
-            count++;
+        for (int j = 0; j < 3; j++) {
+            if (map[0][j] == p && map[1][j] == p && map[2][j] == p) return true;
         }
-        if (map[0][2] == map[1][1] && map[1][1] == map[2][0] && map[1][1] != '.') {
-            if (map[2][0] == 'O') flagO = true;
-            count++;
-        }
-        return count;
-    }
+        // 대각선
+        if (map[0][0] == p && map[1][1] == p && map[2][2] == p) return true;
+        if (map[0][2] == p && map[1][1] == p && map[2][0] == p) return true;
 
-    public static boolean checkDoubleCross() {
-        if (map[0][0] == map[1][1] && map[1][1] == map[2][2] && map[1][1] != '.') {
-            if (map[0][2] == map[1][1] && map[1][1] == map[2][0]) {
-                return true;
-            }
-        }
         return false;
     }
 }
