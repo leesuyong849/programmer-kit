@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 public class Main {
 
     static Character[][] map;
+    static boolean flagO;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -17,6 +18,8 @@ public class Main {
 
             if (s.equals("end")) break;
 
+
+            flagO = false;
             //각 문자 갯수
             int countX = 0, countO = 0;
             //. 이 있는지 확인
@@ -37,19 +40,23 @@ public class Main {
             int flag = check();
 
             if (Math.abs(countX - countO) > 1 || countX < countO) {
-                System.out.println("invalid1");
+                System.out.println("invalid");
                 continue;
             }
 
             if (flag > 1) {
                 if (flag == 2 && checkDoubleCross()) System.out.println("valid");
-                else System.out.println("invalid2");
+                else System.out.println("invalid");
             }
             else if (flag == 0) {
-                if (flagDot) System.out.println("invalid3");
+                if (flagDot) System.out.println("invalid");
                 else System.out.println("valid");
             } else {
-                System.out.println("valid");
+                if (flagO && (countO != countX)){
+                    System.out.println("invalid");
+                } else {
+                    System.out.println("valid");
+                }
             }
         }
     }
@@ -57,11 +64,23 @@ public class Main {
     public static int check() {
         int count = 0;
         for (int i = 0; i < 3; i++) {
-            if (map[i][0] == map[i][1] && map[i][1] == map[i][2] && map[i][0] != '.') count++;
-            else if (map[0][i] == map[1][i] && map[1][i] == map[2][i] && map[0][i] != '.') count++;
+            if (map[i][0] == map[i][1] && map[i][1] == map[i][2] && map[i][0] != '.'){
+                count++;
+                if (map[i][0] == 'O') flagO = true;
+            }
+            else if (map[0][i] == map[1][i] && map[1][i] == map[2][i] && map[0][i] != '.') {
+                count++;
+                if (map[i][0] == 'O') flagO = true;
+            }
         }
-        if (map[0][0] == map[1][1] && map[1][1] == map[2][2] && map[1][1] != '.') count++;
-        if (map[0][2] == map[1][1] && map[1][1] == map[2][0] && map[1][1] != '.') count++;
+        if (map[0][0] == map[1][1] && map[1][1] == map[2][2] && map[1][1] != '.') {
+            if (map[0][0] == 'O') flagO = true;
+            count++;
+        }
+        if (map[0][2] == map[1][1] && map[1][1] == map[2][0] && map[1][1] != '.') {
+            if (map[2][0] == 'O') flagO = true;
+            count++;
+        }
         return count;
     }
 
