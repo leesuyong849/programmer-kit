@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class Main {
+public class Main2 {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -17,19 +17,10 @@ public class Main {
         int[][] map = new int[N][2];
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
-            map[i][0] = Integer.parseInt(st.nextToken());
-            map[i][1] = Integer.parseInt(st.nextToken());
+            map[i][0] = Integer.parseInt(st.nextToken());       //물건의 무게
+            map[i][1] = Integer.parseInt(st.nextToken());       //해당 물건의 가치
         }
 
-        int[] dp = new int[K + 1];
-
-
-        for (int i = 0; i < N; i++) {
-            for (int w = K; w >= map[i][0]; w--) {
-                dp[w] = Math.max(dp[w], dp[w - map[i][0]] + map[i][1]);
-            }
-        }
-
-        System.out.println(dp[K]);
+        int[][] dp = new int[N][2];     //특정 무게에 왔을때 가치의 최대값. 2차는 해당
     }
 }
