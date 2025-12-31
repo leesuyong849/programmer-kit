@@ -8,10 +8,10 @@ import java.util.StringTokenizer;
 
 public class Main {
 
-    static int N;
+    static int N, M;
     static int open1, open2;
     static ArrayList<Integer> map;
-    static int[][] dp;
+    static int[][][] dp;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -27,22 +27,26 @@ public class Main {
         if ((s = br.readLine()) != null) {
             map.add(Integer.parseInt(s));
         }
+        M = map.size();
 
-        dp = new int[map.size()][2];
+        dp = new int[map.size()][N + 1][N + 1];
 
-        dp[0][0] = Math.abs(open1 - map.get(0));
-        int opt1_l = map.get(0);
-        int opt1_r = open2;
+        System.out.println(dfs(0, open1, open2));
+    }
 
-        dp[0][1] = Math.abs(open2 - map.get(1));
-        int opt2_l = open1;
-        int opt2_r = map.get(0);
+    public static int dfs(int idx, int x, int y) {
+        if (idx == M) return 0;
 
-        for (int i = 1; i < map.size(); i++) {
-            int min = Math.min(dp[i - 1][0], dp[i - 1][1]);
-
-            dp[i][0] = Math.abs(opt1_l - map.get(0));
+        if (dp[idx][x][y] != 0) {
+            return dp[idx][x][y];
         }
 
+        int target = map.get(idx);
+
+        int moveLeft = Math.abs(x - target) + dfs(idx + 1, target, y);
+        int moveRight = Math.abs(y - target) + dfs(idx + 1, x, target);
+
+        dp[idx][x][y] = Math.min(moveLeft, moveRight);
+        return dp[idx][x][y];
     }
 }
