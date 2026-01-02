@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-public class Main {
+public class Main3 {
 
     static int N, M;
     static int open1, open2;
@@ -22,27 +22,26 @@ public class Main {
         open2 = Integer.parseInt(st.nextToken());
 
         map = new ArrayList<>();
-
-        String s;
-        if ((s = br.readLine()) != null) {
-            map.add(Integer.parseInt(s));
+        M = N - 2;
+        for (int i = 0; i < M; i++) {
+            map.add(Integer.parseInt(br.readLine()));
         }
-        M = map.size();
 
-        dp = new int[map.size()][N + 1][N + 1];
+        dp = new int[M + 1][N + 1][N + 1];
 
-        System.out.println(dfs(0, open1, open2));
+
     }
 
-    public static int dfs(int idx, int x, int y) {
-        if (idx == M) return 0;
+    public static void dfs(int time, int x, int y) {
+        if (time == M) return;
 
-        int target = map.get(idx);
+        int cur = dp[time][x][y];
+        Integer next = map.get(time);
 
-        int moveLeft = Math.abs(x - target) + dfs(idx + 1, target, y);
-        int moveRight = Math.abs(y - target) + dfs(idx + 1, x, target);
+        int cal = Math.abs(x - next);
+        if (cal < dp[time + 1][x][next]) dp[time + 1][x][next] = cal;
 
-        dp[idx][x][y] = Math.min(moveLeft, moveRight);
-        return dp[idx][x][y];
+        cal = Math.abs(y - next);
+        if (cal < dp[time + 1][next][y]) {}
     }
 }
