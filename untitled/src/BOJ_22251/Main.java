@@ -56,7 +56,7 @@ public class Main {
             if (form == to) continue;
 
             for (int j = 0; j < 7; j++) {
-                if (display[form][j] != display[to][i]) changeCal++;
+                if (display[form][j] != display[to][ㅓ]) changeCal++;
             }
         }
         return changeCal <= P;
