@@ -12,6 +12,10 @@ public class Main {
     static int[] submissionCnt;
     static int[] log;
 
+    class Team {
+
+    }
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
