@@ -6,64 +6,79 @@ import java.io.InputStreamReader;
 
 public class Main {
 
+    static char[] ops;
+    static int N, C;
+    static StringBuilder sb = new StringBuilder();
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int N = Integer.parseInt(br.readLine());
+        N = Integer.parseInt(br.readLine());
+
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < N; i++) {
-            int C = Integer.parseInt(br.readLine());
+            C = Integer.parseInt(br.readLine());
+            ops = new char[C];
             solve(C, sb);
+
+            if (i != N - 1) sb.append('\n');
         }
+
+        System.out.println(sb);
     }
 
     static void solve(int c, StringBuilder sb) {
 
-        dfs(1, 1, c, "1", null);
+        dfs(0);
     }
 
-    public static void dfs(int depth, int cal, int c, String sb, String buffer) {
-        if (depth == c) {
-            if (buffer != null) {
-                cal += Integer.parseInt(buffer);
-                sb = sb + buffer;
-            }
-
-            if (cal == 0) {
-                System.out.println(sb);
+    public static void dfs(int idx) {
+        if (idx == C - 1) {
+            if (evaluate() == 0) {
+                sb.append(builder()).append('\n');
             }
             return;
         }
 
-        int next = depth + 1;
-        int nextCal;
-        //+의 경우
-        if (buffer != null) {
-            nextCal = cal + Integer.parseInt(buffer);
-            buffer = null;
-        } else {
-            nextCal = cal;
-        }
-        String plus = sb + "+" + Integer.toString(next);
-        dfs(depth + 1, nextCal + next, c, plus, buffer);
+        ops[idx] = ' ';
+        dfs(idx + 1);
 
-        //-의 경우
-        if (buffer != null) {
-            nextCal = cal + Integer.parseInt(buffer);
-            buffer = null;
-        } else {
-            nextCal = cal;
-        }
-        String min = sb + "-" + Integer.toString(next);
-        dfs(depth + 1, nextCal - next, c, min, buffer);
+        ops[idx] = '+';
+        dfs(idx + 1);
 
-        //연장의 경우
-        if (buffer != null) {
-            buffer = buffer + Integer.toString(next);
-        } else {
-            buffer = Integer.toString(next);
+        ops[idx] = '-';
+        dfs(idx + 1);
+    }
+
+    public static String builder() {
+        StringBuilder sbn = new StringBuilder();
+        sbn.append("1");
+        for (int i = 0; i < C - 1; i++) {
+            sbn.append(ops[i]).append(i + 2);
         }
-        String vo = sb + " " + Integer.toString(next);
-        dfs(next, cal, c, vo, buffer);
+        return sbn.toString();
+    }
+
+    public static long evaluate() {
+        long result = 0;
+        long num = 1;
+        int sign = 1;
+
+        for (int i = 0; i < C - 1; i++) {
+            char op = ops[i];
+            int next = i + 2;
+
+            if (op == ' ') {
+                num = num * 10 + next;
+            } else {
+                //이전에 갱신된 부호와 값을 반영한다.
+                result += sign * num;
+                //다음 사이클을 위해 부호와 값을 반영한다.
+                sign = (op == '+') ? 1 : -1;
+                num = next;
+            }
+        }
+        result += sign * num;
+        return result;
     }
 }
