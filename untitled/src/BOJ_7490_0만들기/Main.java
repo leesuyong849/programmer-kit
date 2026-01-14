@@ -14,12 +14,12 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         N = Integer.parseInt(br.readLine());
 
-        StringBuilder sb = new StringBuilder();
+        sb = new StringBuilder();
 
         for (int i = 0; i < N; i++) {
             C = Integer.parseInt(br.readLine());
-            ops = new char[C];
-            solve(C, sb);
+            ops = new char[C - 1];
+            solve(C);
 
             if (i != N - 1) sb.append('\n');
         }
@@ -27,7 +27,7 @@ public class Main {
         System.out.println(sb);
     }
 
-    static void solve(int c, StringBuilder sb) {
+    static void solve(int c) {
 
         dfs(0);
     }
@@ -40,6 +40,7 @@ public class Main {
             return;
         }
 
+        //부호를 저장하고 다음 단계로 간다.
         ops[idx] = ' ';
         dfs(idx + 1);
 
