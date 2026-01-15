@@ -30,32 +30,34 @@ public class Main {
         StringTokenizer st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
-        map = new ArrayList<>();
+        String[] name = new String[N];
+        int[] value = new int[N];
 
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
-            String s = st.nextToken();
-            int num = Integer.parseInt(st.nextToken());
-            map.add(new Item(s, num));
+            name[i] = st.nextToken();
+            value[i] = Integer.parseInt(st.nextToken());
         }
 
-        Collections.sort(map);
+
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < M; i++) {
-            String s = br.readLine();
-            int anInt = Integer.parseInt(s);
-
-            String answer = map.get(0).name;
-            for (Item item : map) {
-                if (anInt <= item.value) {
-                    answer = item.name;
-                    break;
-                }
-            }
-            sb.append(answer).append("\n");
+            int x = Integer.parseInt(br.readLine());
+            int idx = lowerBound(value, x);
+            sb.append(name[idx]).append('\n');
         }
 
         System.out.println(sb);
+    }
+
+    static int lowerBound(int[] arr, int target) {
+        int l = 0, r = arr.length; // [l, r)
+        while (l < r) {
+            int mid = (l + r) >>> 1;
+            if (arr[mid] >= target) r = mid;
+            else l = mid + 1;
+        }
+        return l;
     }
 }
