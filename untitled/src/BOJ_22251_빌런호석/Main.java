@@ -1,9 +1,8 @@
-package BOJ_22251;
+package BOJ_22251_빌런호석;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.Buffer;
 import java.util.StringTokenizer;
 
 public class Main {
