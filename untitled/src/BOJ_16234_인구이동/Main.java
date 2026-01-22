@@ -33,11 +33,12 @@ public class Main {
         }
 
         int result = 0;
-        while (true) {
+        while (true) {      //더 이상 이동이 없을때까지 한다.
 
             visited = new int[N][N];
             Map<Integer, Integer> maps = new HashMap<Integer, Integer>();
 
+            //dfs를 통해 그룹을 만든다.
             int group = 1;
             for (int i = 0; i < N; i++) {
                 for (int j = 0; j < N; j++) {
@@ -47,6 +48,8 @@ public class Main {
                         sum = 0;
                         dfs(i, j, group++);
 
+                        //depth가 1이라는 건 연합이 없다는 의미 -> 패스
+                        //값을 maps에 저장한다.
                         if (depth > 1) {
                             maps.put(group - 1, sum / depth);
                         }
@@ -54,6 +57,7 @@ public class Main {
                 }
             }
 
+            //각 그룹에 대해 값을 갱신한다.
             for (int i = 0; i < N; i++) {
                 for (int j = 0; j < N; j++) {
                     int groups = visited[i][j];
