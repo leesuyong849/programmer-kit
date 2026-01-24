@@ -15,6 +15,7 @@ public class Main {
         T = Integer.parseInt(br.readLine());
 
         StringTokenizer st;
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < T; i++) {
             N = Integer.parseInt(br.readLine());
             st = new StringTokenizer(br.readLine());
@@ -23,10 +24,20 @@ public class Main {
                 map[a] = Integer.parseInt(st.nextToken());
             }
 
-            for (int a = N - 1; a >= 0; a--) {
-
+            int std = map[N - 1];
+            long result = 0;
+            for (int a = N - 2; a >= 0; a--) {
+                if (map[a] > std) {
+                    std = map[a];
+                } else {
+                    result += (long) std - map[a];
+                }
             }
+
+            sb.append(result).append('\n');
         }
+
+        System.out.println(sb);
     }
 
     public static void teat() {
