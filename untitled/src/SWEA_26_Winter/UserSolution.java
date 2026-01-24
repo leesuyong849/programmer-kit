@@ -49,10 +49,10 @@ class UserSolution {
                     int semiResult = 0;
                     if (NX >=0 && NX < 8 &&NY >= 0 && NY < 8) {
 
-                        semiResult += leftCheck(NX, NY, target, 0);
-                        semiResult += rightCheck(NX, NY, target, 0);
-                        semiResult += upCheck(NX, NY, target, 0);
-                        semiResult += downCheck(NX, NY, target, 0);
+                        semiResult += leftCheck(NX, NY-1, target, 1);
+                        semiResult += rightCheck(NX, NY+1, target, 1);
+                        semiResult += upCheck(NX-1, NY, target, 1);
+                        semiResult += downCheck(NX+1, NY, target, 1);
                     }
 
                     if (semiResult > resultCal) {
