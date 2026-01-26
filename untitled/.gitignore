@@ -5,3 +5,4 @@ out/
 build/.idea/
 *.iml
 .idea/workspace.xml
+.DS_Store
