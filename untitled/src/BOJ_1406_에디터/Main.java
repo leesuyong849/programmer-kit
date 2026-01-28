@@ -3,6 +3,7 @@ package BOJ_1406_에디터;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Stack;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -13,28 +14,48 @@ public class Main {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String s = br.readLine();
+        int len = s.length();
         M = Integer.parseInt(br.readLine());
 
-        int cursor = s.length() - 1;
-        String newS = s;
-        StringTokenizer st;
+        Stack<Character> stackLeft = new Stack<>();
+        Stack<Character> stackRight = new Stack<>();
+        for (int i = 0; i < len; i++) {
+            stackLeft.push(s.charAt(i));
+        }
 
         for (int i = 0; i < M; i++) {
             String command = br.readLine();
 
             if (command.equals("L")) {
-                cursor = Math.min(0, cursor - 1);
-
+                if (!stackLeft.isEmpty()) {
+                    Character c = stackLeft.pop();
+                    stackRight.push(c);
+                }
             } else if (command.equals("D")) {
-                cursor = Math.max(s.length() - 1, cursor + 1);
+                if (!stackRight.isEmpty()) {
+                    Character c = stackRight.pop();
+                    stackLeft.push(c);
+                }
             }  else if (command.equals("B")) {
-                newS = newS.substring(0, cursor - 1) + newS.substring(cursor + 1);
+                if (!stackLeft.isEmpty()) {
+                    stackLeft.pop();
+                }
             } else {
                 char target = command.charAt(2);
-                newS = newS.substring(0, cursor - 1) + target + newS.substring(cursor);
+                stackLeft.push(target);
             }
         }
 
-        System.out.println(newS);
+        StringBuilder sb = new StringBuilder();
+
+        while (!stackLeft.isEmpty()) {
+            sb.append(stackLeft.pop());
+        }
+        sb.reverse();
+        while (!stackRight.isEmpty()) {
+            sb.append(stackRight.pop());
+        }
+
+        System.out.println(sb);
     }
 }
