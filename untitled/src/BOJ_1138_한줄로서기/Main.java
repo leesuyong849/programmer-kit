@@ -6,34 +6,28 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
+import java.io.*;
+import java.util.*;
+
 public class Main {
-
-    static int N;
-    static int[] map;
-
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        N = Integer.parseInt(br.readLine());
-        map = new int[N];
-        ArrayList<Integer> result = new ArrayList<>();
+        int N = Integer.parseInt(br.readLine());
+        int[] left = new int[N];
+
         StringTokenizer st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < N; i++) {
-            map[i] = Integer.parseInt(st.nextToken());
-            result.add(i);
-        }
+        for (int i = 0; i < N; i++) left[i] = Integer.parseInt(st.nextToken());
 
-        for (int i = 0; i < N; i++) {
-            int a = map[i];
+        List<Integer> line = new ArrayList<>();
 
-            int idx = result.indexOf(i);
-            result.remove(idx);
-            result.add(idx + a, i);
+        // 키 큰 사람부터
+        for (int h = N; h >= 1; h--) {
+
+            line.add(left[h - 1], h);
         }
 
         StringBuilder sb = new StringBuilder();
-        for (Integer integer : result) {
-            sb.append(integer + 1).append(" ");
-        }
+        for (int x : line) sb.append(x).append(' ');
         System.out.println(sb);
     }
 }
