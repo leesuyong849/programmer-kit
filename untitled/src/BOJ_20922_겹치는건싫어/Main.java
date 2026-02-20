@@ -27,6 +27,7 @@ public class Main {
         int left = 0;
         int max = 0;
 
+        //for 문 안에 right 자동으로 처리
         for (int right = 0; right < N; right++) {
             int x = map[right];
             cnt[x]++;
