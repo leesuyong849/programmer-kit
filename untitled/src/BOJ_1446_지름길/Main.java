@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
@@ -45,8 +44,12 @@ public class Main {
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
             int s = Integer.parseInt(st.nextToken());
-            Node node = new Node(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
-            list[s].add(node);
+            int e = Integer.parseInt(st.nextToken());
+            int w = Integer.parseInt(st.nextToken());
+
+            //범위를 벗어나는 지름길은 무시
+            if (s > D || e > D) continue;
+            list[s].add(new Node(e, w));
         }
 
         dij(0);
