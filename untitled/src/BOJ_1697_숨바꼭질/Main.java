@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -17,6 +18,7 @@ public class Main {
         N = Integer.parseInt(st.nextToken());
         K = Integer.parseInt(st.nextToken());
         visited = new int[100001];
+        Arrays.fill(visited, -1);
 
         ArrayDeque<int[]> que = new ArrayDeque<>();
         que.add(new int[]{N, 0});
@@ -33,15 +35,15 @@ public class Main {
                 continue;
             }
 
-            if (x - 1 > 0 && visited[x - 1] == 0) {
+            if (x - 1 >= 0 && visited[x - 1] == -1) {
                 que.add(new int[]{x - 1, q + 1});
                 visited[x - 1] = q + 1;
 
-            }  if (x + 1 < 100001 && visited[x + 1] == 0) {
+            }  if (x + 1 < 100001 && visited[x + 1] == -1) {
                 que.add(new int[]{x + 1, q + 1});
                 visited[x + 1] = q + 1;
 
-            } if (x * 2 < 100001 && visited[ x * 2] == 0) {
+            } if (x * 2 < 100001 && visited[ x * 2] == -1) {
                 que.add(new int[]{x * 2, q + 1});
                 visited[x * 2] = q + 1;
             }
