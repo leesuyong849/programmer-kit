@@ -36,11 +36,14 @@ public class Main2 {
         //각 단어의 첫 글자를 비교한다.
         for (int i = 0; i < list.size(); i++) {
             String s = list.get(i);
-            char c = Character.toUpperCase(s.charAt(0));
+            char c = Character.toUpperCase(s.charAt(0));  //대소문자 구분 안함 - 비교는 전부 대문자로
             int idx = c - 'A';
+
+            //단축키로 지정할 수 있다면
             if (map[idx] == 0) {
                 map[idx] = 1;
 
+                //해당 단어 앞의 단어 처리
                 if (i != 0) {
                     for (int j = 0; j < i; j++) {
                         sb.append(list.get(j)).append(" ");
@@ -48,6 +51,7 @@ public class Main2 {
                 }
                 sb.append("[").append(s.charAt(0)).append("]").append(s.substring(1));
 
+                //해당 단어 뒤의 단어 처리
                 if (i + 1 != list.size()) {
                     for (int j = i + 1; j < list.size(); j++) {
                         sb.append(" ").append(list.get(j));
@@ -59,6 +63,8 @@ public class Main2 {
             }
         }
 
+        //각 단어의 첫 문자를 단축어로 지정할 수 없는 경우: 그냥 앞에서 부터 파악
+        //일단 하나의 문자열로 만든 후 판단한다.
         StringBuilder sb2 = new StringBuilder();
         for (String s : list) {
             sb2.append(s).append(" ");
