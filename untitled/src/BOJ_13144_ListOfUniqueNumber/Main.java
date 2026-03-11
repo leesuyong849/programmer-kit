@@ -27,7 +27,7 @@ public class Main {
 
         check = new int[100001];
         curCnt = 0;
-        int next = 0;
+        int next = 0;       //중복으로 인해 업데이트되지 못한 값. 여기서부터 판단을 시작한다.
 
         for (int i = 0; i < N; i++) {
             //마지막에 업데이트한 것 다음 것부터 판단.
