@@ -1,4 +1,4 @@
-package BOJ_15989;
+package BOJ_15989_123더하기4;
 
 import java.io.BufferedReader;
 import java.io.IOException;
