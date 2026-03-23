@@ -29,7 +29,7 @@ public class Main {
             st = new StringTokenizer(br.readLine());
             for (int j = 0; j < N; j++) {
                 int a = Integer.parseInt(st.nextToken());
-                if (a == 0) {
+                if (a == 1) {
                     map[i].add(j);
                 }
             }
@@ -37,7 +37,7 @@ public class Main {
 
         st  = new StringTokenizer(br.readLine());
         for (int i = 0; i < M; i++) {
-            plan[i] = Integer.parseInt(st.nextToken());
+            plan[i] = Integer.parseInt(st.nextToken()) - 1;
         }
 
         for (int i = 0; i < M - 1; i++) {
