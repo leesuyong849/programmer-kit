@@ -68,8 +68,6 @@ public class Main {
                 boolean dfs = dfs(next, end);
 
                 if (dfs) return true;
-
-                visited[next] = false;
             }
         }
         return false;
