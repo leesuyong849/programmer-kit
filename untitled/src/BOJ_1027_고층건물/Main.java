@@ -10,7 +10,6 @@ public class Main {
 
     static int N;
     static int[] map;
-    static int Max;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
