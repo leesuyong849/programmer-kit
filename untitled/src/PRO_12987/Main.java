@@ -16,7 +16,7 @@ class Solution {
         Arrays.sort(B);
 
         int count = 0;
-        int i = 0; // A 포인터
+        int i = 0;
 
         for (int j = 0; j < B.length; j++) {
             if (B[j] > A[i]) {
