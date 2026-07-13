@@ -13,7 +13,7 @@ class Solution {
         for (String[] ticket : tickets) {
             String from = ticket[0];
             String to = ticket[1];
-            graph.computeIfAbsent(from, k -> List.of()).add(to);
+            graph.computeIfAbsent(from, k -> new ArrayList<>()).add(to);
         }
 
         //알파벳 순서로 가기로 했으므로 하나의 출발지에서 갈 수 있는 목적지들을 정렬
@@ -25,7 +25,7 @@ class Solution {
         LinkedList<String> route = new LinkedList<>();
 
         //여행의 시작은 인천
-        stack.push("INC");
+        stack.push("ICN");
 
         while(!stack.isEmpty()) {
             String cur = stack.peek();
