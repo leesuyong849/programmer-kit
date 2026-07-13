@@ -35,6 +35,8 @@ class Solution {
                 String next = des.remove(0);
                 stack.push(next);
             } else {
+                //이 도시에서 더 이상 갈 곳이 없다면 문제에서 주어진 모든 티켓을 사용한다는 조건이 있으므로
+                //이 도시는 여기서 확정된다.
                 route.addFirst(stack.pop());
             }
         }
